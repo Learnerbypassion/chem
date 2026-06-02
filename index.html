@@ -1,0 +1,645 @@
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(216, 90, 48, 0.15); }
+  50% { box-shadow: 0 0 18px rgba(216, 90, 48, 0.3); }
+}
+
+:root {
+  --bg-base: #0c0f1a;
+  --bg-surface: rgba(20, 24, 44, 0.75);
+  --bg-card: rgba(26, 31, 56, 0.6);
+  --bg-card-hover: rgba(34, 40, 72, 0.8);
+  --border-subtle: rgba(99, 115, 180, 0.15);
+  --border-focus: rgba(99, 115, 180, 0.35);
+  --text-primary: #e4e8f7;
+  --text-secondary: #8892b0;
+  --text-muted: #5a6385;
+  --accent-high: #ff6b3d;
+  --accent-high-bg: rgba(255, 107, 61, 0.1);
+  --accent-med: #2dd4a0;
+  --accent-med-bg: rgba(45, 212, 160, 0.1);
+  --accent-low: rgba(99, 115, 180, 0.3);
+  --accent-blue: #60a5fa;
+  --accent-blue-bg: rgba(96, 165, 250, 0.1);
+  --accent-green: #4ade80;
+  --accent-green-bg: rgba(74, 222, 128, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-base);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(45, 212, 160, 0.08), transparent);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ── Hero ── */
+.hero {
+  background: var(--bg-surface);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2rem 2.25rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-high), var(--accent-med), var(--accent-blue));
+  background-size: 200% 100%;
+  animation: shimmer 4s linear infinite;
+}
+.hero h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Stats Grid ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+.stat {
+  background: var(--bg-surface);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1rem;
+  text-align: center;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.stat:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-focus);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+.stat-n {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.stat-l {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Legend ── */
+.legend {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 1.5rem;
+  font-size: 12.5px;
+  flex-wrap: wrap;
+  color: var(--text-secondary);
+  padding: 0.75rem 1rem;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+.legend > span {
+  display: inline-flex;
+  align-items: center;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 6px;
+  flex-shrink: 0;
+}
+.d-high { background: var(--accent-high); box-shadow: 0 0 6px rgba(255, 107, 61, 0.4); }
+.d-med { background: var(--accent-med); box-shadow: 0 0 6px rgba(45, 212, 160, 0.4); }
+.d-low { background: var(--accent-low); }
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+  padding: 6px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+.tab {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.tab:hover {
+  color: var(--text-primary);
+  background: rgba(99, 115, 180, 0.08);
+}
+.tab.active {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.15);
+}
+
+/* ── Module sections ── */
+.module { display: none; }
+.module.active {
+  display: block;
+  animation: fadeInUp 0.35s ease-out;
+}
+
+/* ── Section heads ── */
+.section-head {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 2rem 0 0.75rem;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-head::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent-blue), var(--accent-med));
+  flex-shrink: 0;
+}
+
+/* ── Question Cards ── */
+.q-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  transition: all 0.25s ease;
+  border-left: 3px solid transparent;
+}
+.q-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-focus);
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.q-card.high {
+  border-left: 3px solid var(--accent-high);
+}
+.q-card.high:hover {
+  box-shadow: 0 4px 20px rgba(255, 107, 61, 0.12), 0 0 0 1px rgba(255, 107, 61, 0.08);
+}
+.q-card.med {
+  border-left: 3px solid var(--accent-med);
+}
+.q-card.med:hover {
+  box-shadow: 0 4px 20px rgba(45, 212, 160, 0.12), 0 0 0 1px rgba(45, 212, 160, 0.08);
+}
+.q-card.low {
+  border-left: 3px solid var(--accent-low);
+}
+
+/* ── Badges ── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.b-freq {
+  background: var(--accent-high-bg);
+  color: var(--accent-high);
+  border: 1px solid rgba(255, 107, 61, 0.2);
+}
+.b-marks {
+  background: var(--accent-blue-bg);
+  color: var(--accent-blue);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+}
+.b-ans {
+  background: var(--accent-green-bg);
+  color: var(--accent-green);
+  border: 1px solid rgba(74, 222, 128, 0.15);
+}
+
+/* ── Question text ── */
+.q-text {
+  font-size: 13.5px;
+  line-height: 1.7;
+  flex: 1;
+  color: var(--text-primary);
+}
+.ans {
+  font-size: 12.5px;
+  color: var(--accent-green);
+  margin-top: 6px;
+  font-weight: 500;
+  padding: 6px 10px;
+  background: var(--accent-green-bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(74, 222, 128, 0.1);
+}
+.freq-wrap {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+  flex-direction: column;
+}
+.opts {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  line-height: 1.7;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(99, 115, 180, 0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99, 115, 180, 0.4); }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .wrap { padding: 1rem 0.75rem 3rem; }
+  .hero { padding: 1.25rem 1rem; }
+  .hero h1 { font-size: 18px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .tab { padding: 6px 10px; font-size: 12px; }
+  .q-card { padding: 0.75rem 0.9rem; gap: 10px; }
+  .q-card:hover { transform: translateX(2px); }
+}
+</style>
+<div class="wrap">
+<div class="hero">
+<h1>Engineering Chemistry — Important Questions Bank</h1>
+<p>Narula Institute of Technology · R23 scheme · Analyzed from 17 exam papers (ODD 2023, EVEN 2024, ODD 2024, EVEN 2025)</p>
+</div>
+<div class="stats">
+<div class="stat"><div class="stat-n" style="color:#D85A30">17</div><div class="stat-l">Papers analyzed</div></div>
+<div class="stat"><div class="stat-n" style="color:#1D9E75">6</div><div class="stat-l">Modules covered</div></div>
+<div class="stat"><div class="stat-n" style="color:#185FA5">80+</div><div class="stat-l">Unique questions</div></div>
+<div class="stat"><div class="stat-n" style="color:#63991a">🔥</div><div class="stat-l">High priority = 8+ repeats</div></div>
+</div>
+<div class="legend">
+<span><span class="dot d-high"></span>High priority (≥5 times)</span>
+<span><span class="dot d-med"></span>Medium priority (3–4 times)</span>
+<span><span class="dot d-low"></span>Low priority (1–2 times)</span>
+</div>
+<div class="tabs">
+<div class="tab active" onclick="show('m1',this)">Module 1: Atomic Structure</div>
+<div class="tab" onclick="show('m2',this)">Module 2: Polymers</div>
+<div class="tab" onclick="show('m3',this)">Module 3: Water</div>
+<div class="tab" onclick="show('m4',this)">Module 4: Thermodynamics</div>
+<div class="tab" onclick="show('m5',this)">Module 5: Reactions</div>
+<div class="tab" onclick="show('m6',this)">Module 6: Solid State</div>
+<div class="tab" onclick="show('mx',this)">Extra / Spectroscopy</div>
+</div>
+
+<div class="module active" id="m1">
+<div class="section-head">MCQ — 1 mark each</div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 9</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which of the following is not applicable to Bohr's theory?<div class="opts">a) H &nbsp; b) He⁺ &nbsp; c) Li²⁺ &nbsp; d) Be³⁺ &nbsp; / multi-electron atoms</div><div class="ans">✓ Answer: multi-electron atoms (Bohr only works for H-like single-electron species)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">1 mk</span></div><div class="q-text">The possible set of quantum numbers for the unpaired electron of potassium / sodium is?<div class="opts">For K: n=4, l=0, m=0 &nbsp; | &nbsp; For Na: n=3, l=0, m=0</div><div class="ans">✓ K: n=4, l=0, m=0 &nbsp; | &nbsp; Na: n=3, l=0, m=0</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which quantum number is associated with orientation of orbital in space?<div class="opts">a) Principal (n) &nbsp; b) Azimuthal (l) &nbsp; c) Magnetic (m) &nbsp; d) Spin</div><div class="ans">✓ Answer: c) Magnetic quantum number (m)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">The element with highest electron affinity among halogens is?<div class="opts">a) Fluorine &nbsp; b) Chlorine &nbsp; c) Bromine &nbsp; d) Iodine</div><div class="ans">✓ Answer: b) Chlorine (F has small size, electron repulsion reduces EA)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Electron affinity is the energy change associated with?<div class="opts">a) Losing an electron &nbsp; b) Gaining an electron &nbsp; c) Losing proton &nbsp; d) Gaining proton</div><div class="ans">✓ Answer: b) Gaining an electron</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Atomic size of elements in periodic table along a period?<div class="opts">a) Decreases left to right &nbsp; b) Increases left to right &nbsp; c) Decreases down group</div><div class="ans">✓ Answer: a) Decreases from left to right</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which carbon is more electronegative? Ethylene / Acetylene / Methane / Ethane<div class="ans">✓ Answer: b) Acetylene (sp carbon, more s-character = more electronegative)</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">According to Aufbau principle, which orbital is filled immediately after 4f?<div class="opts">a) 6s &nbsp; b) 5d &nbsp; c) 5f &nbsp; d) 5p</div><div class="ans">✓ Answer: b) 5d</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which of the following elements will show f-contraction / lanthanide contraction?<div class="opts">a) Fe &nbsp; b) Ca &nbsp; c) La &nbsp; d) F</div><div class="ans">✓ Answer: c) La (Lanthanides show lanthanide contraction)</div></div></div>
+
+<div class="q-card low"><div class="freq-wrap"><span class="badge b-freq">× 2</span><span class="badge b-marks">1 mk</span></div><div class="q-text">What does Hund's Rule state?<div class="ans">✓ Answer: c) Electrons occupy orbitals singly before pairing</div></div></div>
+
+<div class="q-card low"><div class="freq-wrap"><span class="badge b-freq">× 2</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Mg and Li share similar properties due to?<div class="opts">a) Same group &nbsp; b) Diagonal relationship &nbsp; c) Same EA &nbsp; d) Same IP</div><div class="ans">✓ Answer: b) Diagonal relationship</div></div></div>
+
+<div class="section-head">2 mark questions</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">2 mk</span></div><div class="q-text">Write down the set of four quantum numbers for the valence electron of potassium / sodium atom.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">2 mk</span></div><div class="q-text">Differentiate between electron affinity and electronegativity.</div></div>
+
+<div class="section-head">5 mark questions</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write down the drawbacks/limitations of Bohr's atomic model. Explain what problems Bohr modified his model to address.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write the electronic configurations of Cr and Cu. Explain which is more stable and why (d⁵ vs d⁶ system).</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Explain the general trend of ionization energy in the periodic table. Why is IE of N greater than O? Explain with electronic configuration.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What is atomic radii / atomic size? Explain the periodic trend along period and group. Also explain effective nuclear charge and screening effect.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 5</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Though F has higher electronegativity than Cl, the electron affinity of Cl is greater than that of F — explain.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 5</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What is ionization potential? On which factors does ionization potential depend?</div></div>
+
+<div class="section-head">Long answer (15 marks)</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">15 mk</span></div><div class="q-text">State Bohr's postulates for one-electron system. Derive expression for energy of electron in nth orbit. Calculate radius of 2nd Bohr orbit of H atom.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">15 mk</span></div><div class="q-text">What is the importance of angular and spin quantum numbers? Write all four quantum numbers for last electron of Cr and Cu. Explain stability of d⁵ over d⁶. [5+5+5]</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">15 mk</span></div><div class="q-text">IE₁ for Mg > IE₁ for Na, but IE₂ for Na > IE₂ for Mg — explain with electronic configuration.</div></div>
+</div>
+
+<div class="module" id="m2">
+<div class="section-head">MCQ — 1 mark each</div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 9</span><span class="badge b-marks">1 mk</span></div><div class="q-text">PVC is an example of?<div class="opts">a) Condensation polymer &nbsp; b) Natural polymer &nbsp; c) Thermoplastic polymer &nbsp; d) Thermosetting polymer</div><div class="ans">✓ Answer: c) Thermoplastic polymer</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Natural polymer is an example of?<div class="opts">a) Condensation polymer &nbsp; b) Copolymer &nbsp; c) Addition polymer &nbsp; d) Thermosetting polymer</div><div class="ans">✓ Answer: a) Condensation polymer (e.g., cellulose, proteins)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which of the following is NOT an example of biopolymer?<div class="opts">a) Cellulose &nbsp; b) Polyethylene &nbsp; c) Protein &nbsp; d) DNA</div><div class="ans">✓ Answer: b) Polyethylene (it is synthetic)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which is an example of copolymer?<div class="opts">a) Polyethylene &nbsp; b) Buna S &nbsp; c) Teflon &nbsp; d) Polystyrene</div><div class="ans">✓ Answer: b) Buna S (styrene + butadiene copolymer)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which category of polymers have the strongest molecular force?<div class="opts">a) Elastomers &nbsp; b) Thermoplastics &nbsp; c) Thermosets &nbsp; d) Fibres</div><div class="ans">✓ Answer: d) Fibres</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Bakelite is an example of?<div class="opts">a) Addition polymer &nbsp; b) Isotactic polymer &nbsp; c) Thermoplastic &nbsp; d) Thermosetting polymer</div><div class="ans">✓ Answer: d) Thermosetting polymer</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which one of the following is a thermoplastic?<div class="opts">a) Bakelite &nbsp; b) PVC &nbsp; c) Epoxy &nbsp; d) Melamine</div><div class="ans">✓ Answer: b) PVC</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Bakelite is prepared from?<div class="opts">a) Phenol + Formaldehyde &nbsp; b) Phenol + Acetaldehyde &nbsp; c) Acetic acid + Hexamethylenediamine</div><div class="ans">✓ Answer: a) Phenol and Formaldehyde</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which polymer has the highest thermal stability?<div class="opts">a) Teflon &nbsp; b) Nylon &nbsp; c) Polyethylene &nbsp; d) Polystyrene</div><div class="ans">✓ Answer: a) Teflon</div></div></div>
+
+<div class="section-head">5 mark questions</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 10</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Differentiate between thermoplastic and thermosetting polymers with examples.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Classify different types of polymers (by origin, thermal response, structure, etc.) and explain with examples.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What is tacticity? Distinguish between isotactic, syndiotactic, and atactic polymers with examples and structure.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Differentiate between addition and condensation polymers with examples. Mention points of difference between the two polymerization methods.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Synthesis of Aspirin and Paracetamol — explain the chemical reactions and mention their uses.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 5</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write a short note on biopolymers. Give two examples and mention their importance.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write the names and formulae of monomers of Nylon 6,6 and draw the polymeric chain structure.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What is a crosslinked polymer? Classify polymers based on tacticity.</div></div>
+
+<div class="section-head">Long answer (15 marks)</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">15 mk</span></div><div class="q-text">Classify polymer based on thermal response and differentiate with examples. Also distinguish homopolymer and copolymer. Explain isotactic, syndiotactic, atactic with structures.</div></div>
+</div>
+
+<div class="module" id="m3">
+<div class="section-head">MCQ — 1 mark each</div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 9</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which of the following is responsible for water hardness?<div class="opts">a) Sodium chloride &nbsp; b) Potassium chloride &nbsp; c) Calcium chloride &nbsp; d) Silver chloride</div><div class="ans">✓ Answer: c) Calcium chloride (Ca²⁺ and Mg²⁺ salts cause hardness)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Temporary hardness of water is due to?<div class="opts">a) Sulfates of Ca and Mg &nbsp; b) Bicarbonates of Ca and Mg &nbsp; c) Chlorides of Ca and Mg</div><div class="ans">✓ Answer: b) Bicarbonates of calcium and magnesium</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Paracetamol is used to treat?<div class="opts">a) Orthopedic ailments &nbsp; b) Stomach ailments &nbsp; c) Pain and fever &nbsp; d) Lung infection</div><div class="ans">✓ Answer: c) Pain and fever (analgesic + antipyretic)</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Ion exchange method is used to?<div class="opts">a) Remove permanent hardness &nbsp; b) Protect metal from corrosion &nbsp; c) Measure alkalinity</div><div class="ans">✓ Answer: a) To remove permanent hardness of water</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Temporary hardness is caused by presence of?<div class="opts">a) Nitrates &nbsp; b) Carbonates &nbsp; c) Bicarbonates &nbsp; d) Sulphates</div><div class="ans">✓ Answer: c) Bicarbonates</div></div></div>
+
+<div class="section-head">5 mark questions</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 9</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Calculate temporary and permanent hardness of a water sample. Given: Ca(HCO₃)₂ = 16.2 mg/L, Mg(HCO₃)₂ = 7.3 mg/L, MgCl₂ = 9.5 mg/L, CaSO₄ = 13.6 mg/L. [Most repeated numerical]</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Classify hardness of water (temporary and permanent) with examples. Distinguish between them.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">How can permanent hardness be removed? Describe ion-exchange / zeolite / permutit process.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What is COD? What precautions should be taken during the BOD test?</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What do you mean by complexometric titration? Why is permanent hardness not used in boiler water?</div></div>
+
+<div class="section-head">Long answer (15 marks)</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">15 mk</span></div><div class="q-text">Discuss the concept of water hardness including different types, causes, and methods to determine hardness. How can permanent hardness be removed? Why is it not suitable for boiler water? [7+3+5]</div></div>
+</div>
+
+<div class="module" id="m4">
+<div class="section-head">MCQ — 1 mark each</div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 9</span><span class="badge b-marks">1 mk</span></div><div class="q-text">ΔH for an exothermic reaction is?<div class="opts">a) Positive &nbsp; b) Negative &nbsp; c) Zero &nbsp; d) None of these</div><div class="ans">✓ Answer: b) Negative (heat is released)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Free energy change (ΔG) for a spontaneous reaction is?<div class="opts">a) Positive &nbsp; b) Zero &nbsp; c) Negative &nbsp; d) Infinite</div><div class="ans">✓ Answer: c) Negative</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">1 mk</span></div><div class="q-text">G (Gibbs free energy) is the available energy to do?<div class="opts">a) Non PV work &nbsp; b) PV work &nbsp; c) Maximum work &nbsp; d) None</div><div class="ans">✓ Answer: a) Non PV work</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">1 mk</span></div><div class="q-text">During mixing, entropy?<div class="opts">a) Decreases &nbsp; b) Increases &nbsp; c) Remains unchanged &nbsp; d) Cannot be predicted</div><div class="ans">✓ Answer: b) Increases</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">A process in which no heat change occurs is called?<div class="opts">a) Isochoric &nbsp; b) Isothermal &nbsp; c) Isobaric &nbsp; d) Adiabatic</div><div class="ans">✓ Answer: d) Adiabatic process</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which of the following is an intensive property?<div class="opts">a) Internal energy &nbsp; b) Enthalpy &nbsp; c) Molar entropy &nbsp; d) Entropy</div><div class="ans">✓ Answer: c) Molar entropy</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 5</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Maximum work in an isothermal process can be obtained when it is?<div class="opts">a) Irreversible &nbsp; b) Adiabatic &nbsp; c) Reversible &nbsp; d) Cyclic</div><div class="ans">✓ Answer: c) Reversible</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">If ideal gas undergoes isothermal compression, internal energy and enthalpy change must be?<div class="opts">a) Negative &nbsp; b) Positive &nbsp; c) None &nbsp; d) Zero</div><div class="ans">✓ Answer: d) Zero (for ideal gas, U and H depend only on T)</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which of the following equations is incorrect?<div class="opts">a) H = G + TS &nbsp; b) G = H + TS &nbsp; c) A = U – TS &nbsp; d) H = U + PV</div><div class="ans">✓ Answer: b) G = H + TS (correct is G = H – TS)</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">1 mk</span></div><div class="q-text">A process in which volume remains constant is called?<div class="ans">✓ Answer: Isochoric process</div></div></div>
+
+<div class="section-head">5 mark questions</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Define entropy along with its significance. Write down the criteria of spontaneity for a thermodynamic process.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What are the limitations of the 1st law of thermodynamics? State the 2nd law of thermodynamics.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Calculate the entropy change for vaporization of ether / heating of N₂ / given thermodynamic data. [Numerical]</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Show the condition of spontaneity of Gibbs free energy change. Derive the Gibbs free energy equation and explain its significance.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 5</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Explain exothermic and endothermic reactions in light of enthalpy change. Draw graphs for both.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">State the first and second laws of thermodynamics and their relevance to chemical equilibria.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Explain the term enthalpy and internal energy in thermodynamics. Derive their relationship.</div></div>
+
+<div class="section-head">Long answer (15 marks)</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">15 mk</span></div><div class="q-text">Derive the Gibbs free energy equation and explain its significance in determining spontaneity. Explain how Gibbs free energy predicts whether a reaction will occur at constant T and P. [10+5]</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 5</span><span class="badge b-marks">15 mk</span></div><div class="q-text">Write differences between exothermic and endothermic reactions using graphs. Show increasing order of energy of 1st Bohr orbit for H, He⁺, Li²⁺, Be³⁺ with explanation. Distinguish homopolymer and copolymer.</div></div>
+</div>
+
+<div class="module" id="m5">
+<div class="section-head">MCQ — 1 mark each</div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 9</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Inversion of configuration / Racemization occurs in which of the following?<div class="opts">a) E1 reaction &nbsp; b) SN2 reaction &nbsp; c) SN1 reaction &nbsp; d) Free radical halogenation</div><div class="ans">✓ Inversion → SN2 &nbsp; | &nbsp; Racemization → SN1</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which gas is mainly responsible for dry corrosion?<div class="opts">a) CO₂ &nbsp; b) CO &nbsp; c) Oxygen &nbsp; d) Nitrogen</div><div class="ans">✓ Answer: c) Oxygen</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Rusting of iron is an example of?<div class="opts">a) Acid corrosion &nbsp; b) Dry corrosion &nbsp; c) Wet corrosion &nbsp; d) None</div><div class="ans">✓ Answer: c) Wet corrosion (electrochemical)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Conversion of electrical energy to chemical energy is done by?<div class="opts">a) Electrolytic cell &nbsp; b) Galvanic cell &nbsp; c) Hydro dynamic cell &nbsp; d) All</div><div class="ans">✓ Answer: a) Electrolytic cell</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which alkyl halide is more reactive towards SN2 reaction?<div class="opts">a) Methyl chloride &nbsp; b) Isopropyl chloride &nbsp; c) tert-Butyl chloride &nbsp; d) Benzyl chloride</div><div class="ans">✓ Answer: a) Methyl chloride (least steric hindrance)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Reaction of propene with HBr in presence of peroxide follows?<div class="opts">a) Nucleophilic addition &nbsp; b) Electrophilic addition &nbsp; c) Electrophilic substitution &nbsp; d) Free radical mechanism</div><div class="ans">✓ Answer: d) Free radical mechanism (anti-Markovnikov)</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">The anodic area in corrosion acts as?<div class="opts">a) Reduction site &nbsp; b) Oxidation site &nbsp; c) Neutral site &nbsp; d) Protective site</div><div class="ans">✓ Answer: b) Oxidation site</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">In electrochemical cells, oxidation occurs at the?<div class="opts">a) Anode &nbsp; b) Cathode &nbsp; c) Salt bridge &nbsp; d) Electrolyte</div><div class="ans">✓ Answer: a) Anode</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">The cell reaction is spontaneous if the cell potential is?<div class="opts">a) Positive &nbsp; b) Negative &nbsp; c) Zero &nbsp; d) Infinite</div><div class="ans">✓ Answer: a) Positive</div></div></div>
+
+<div class="section-head">5 mark questions</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 10</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write the differences between SN1 and SN2 reactions (rate, mechanism, stereochemistry, intermediates, energy diagram).</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">5 mk</span></div><div class="q-text">State Markovnikov's rule. Explain Markovnikov addition of HBr to propene with mechanism.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write the differences between wet corrosion and dry corrosion. What is protective corrosion?</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write the Nernst equation and calculate EMF of the cell Cu(s)|Cu²⁺(0.130M)||Ag⁺(1.00M)|Ag(s). Given E⁰ Cu²⁺/Cu = 0.34V, E⁰ Ag⁺/Ag = +0.80V.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 5</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Why does the peroxide effect occur only in HBr but not in HF, HCl, and HI? Explain with mechanism.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Differentiate between chemical corrosion and electrochemical corrosion.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Why is anodic protection better than cathodic protection? Justify with example.</div></div>
+
+<div class="section-head">Long answer (15 marks)</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">15 mk</span></div><div class="q-text">Write a comparative discussion on SN1 and SN2 reactions: a) rate equation, b) mechanism, c) potential energy diagram, d) stereochemistry implications. [8 marks] + Explain electrochemical corrosion and rust formation reactions [4] + Why is anodic protection better? [3]</div></div>
+</div>
+
+<div class="module" id="m6">
+<div class="section-head">MCQ — 1 mark each</div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 9</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Example of stoichiometric defect is?<div class="opts">a) F-centre &nbsp; b) Schottky defect &nbsp; c) Metal deficiency defect &nbsp; d) None</div><div class="ans">✓ Answer: b) Schottky defect</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">1 mk</span></div><div class="q-text">NaCl crystals appear yellow due to?<div class="opts">a) Schottky defect &nbsp; b) Frenkel defect &nbsp; c) F-centre &nbsp; d) Point defect</div><div class="ans">✓ Answer: c) F-centre (anionic vacancies trap electrons)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">1 mk</span></div><div class="q-text">ZnO is yellow when hot due to?<div class="opts">a) Stoichiometric defect &nbsp; b) Non-stoichiometric &nbsp; c) Impurity defect &nbsp; d) None</div><div class="ans">✓ Answer: b) Non-stoichiometric defect (metal excess)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Arsenic doped in silicon produces semiconductor of?<div class="opts">a) n-type &nbsp; b) p-type &nbsp; c) np-type &nbsp; d) Internal</div><div class="ans">✓ Answer: a) n-type (As has 5 valence electrons, donates extra electron)</div></div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">1 mk</span></div><div class="q-text">What is the role of a dopant in a semiconductor?<div class="opts">a) Forms covalent bonds &nbsp; b) Decreases stability &nbsp; c) Reduces density &nbsp; d) Enhances conductivity</div><div class="ans">✓ Answer: d) Enhances conductivity</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which defect causes decrease of density of crystals?<div class="opts">a) Interstitial defect &nbsp; b) F-centre &nbsp; c) Schottky defect &nbsp; d) Frenkel defect</div><div class="ans">✓ Answer: c) Schottky defect</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which type of ions (cations or anions) are more likely to create Frenkel defects, and why?<div class="ans">✓ Cations — because they are smaller and can fit into interstitial voids</div></div></div>
+
+<div class="section-head">5 mark questions</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 9</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What is F-centre? How does it affect crystal properties? Explain the differences between n-type and p-type semiconductors.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 8</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What do you mean by Schottky defect and Frenkel defect? Give examples and explain how they differ.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write differences between n-type and p-type semiconductors with examples. What is doping? Explain its types.</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Discuss metal excess and metal deficient defects with examples.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write differences between paramagnetic and ferromagnetic substances with suitable example.</div></div>
+</div>
+
+<div class="module" id="mx">
+<div class="section-head">Spectroscopy & Nano (MCQ)</div>
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 5</span><span class="badge b-marks">1 mk</span></div><div class="q-text">In UV-Vis spectroscopy, which electronic transition requires the least energy?<div class="opts">a) σ→σ* &nbsp; b) π→π* &nbsp; c) n→π* &nbsp; d) n→σ*</div><div class="ans">✓ Answer: c) n→π* (lowest energy transition)</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Energy range of IR spectra lies between?<div class="opts">a) 100–1000 cm⁻¹ &nbsp; b) 400–1500 cm⁻¹ &nbsp; c) 400–4000 cm⁻¹ &nbsp; d) 200–2000 cm⁻¹</div><div class="ans">✓ Answer: c) 400–4000 cm⁻¹</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">In UV spectrometer, cuvette is made of?<div class="opts">a) Quartz only &nbsp; b) Metal only &nbsp; c) Normal plastic &nbsp; d) None</div><div class="ans">✓ Answer: a) Quartz only</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">1 mk</span></div><div class="q-text">NMR spectra are normally carried out on?<div class="opts">a) Liquid or solution &nbsp; b) Gas &nbsp; c) Solid &nbsp; d) Suspension</div><div class="ans">✓ Answer: a) Liquid or solution</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Splitting of spectral lines in presence of electric field is known as?<div class="opts">a) Zeeman effect &nbsp; b) Stark effect &nbsp; c) Both &nbsp; d) None</div><div class="ans">✓ Answer: b) Stark effect</div></div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which method is widely used for bottom-up synthesis of metal nanoparticles?<div class="opts">a) Laser ablation &nbsp; b) Mechanical grinding &nbsp; c) Chemical reduction &nbsp; d) Lithography</div><div class="ans">✓ Answer: c) Chemical reduction</div></div></div>
+
+<div class="q-card low"><div class="freq-wrap"><span class="badge b-freq">× 2</span><span class="badge b-marks">1 mk</span></div><div class="q-text">Which of the following is an anti-knocking reagent?<div class="opts">a) Tetra ethyl lead &nbsp; b) Tetra methyl lead &nbsp; c) Tetra propyl lead &nbsp; d) None</div><div class="ans">✓ Answer: a) Tetra ethyl lead (TEL)</div></div></div>
+
+<div class="section-head">5 mark questions</div>
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 7</span><span class="badge b-marks">5 mk</span></div><div class="q-text">State and explain the basic principles of UV-Vis and IR spectroscopy. What are chromophores and auxochromes?</div></div>
+
+<div class="q-card high"><div class="freq-wrap"><span class="badge b-freq">× 6</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What are the applications of IR spectroscopy in organic reactions? Explain the fingerprint region. Why are azo compounds considered chromophores?</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What is absorbance? Provide a schematic graphical presentation of UV-Vis and IR spectra.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 4</span><span class="badge b-marks">5 mk</span></div><div class="q-text">Write the applications of nanomaterials in chemistry / agriculture. What are GCV and NCV? Explain octane number and cetane number.</div></div>
+
+<div class="q-card med"><div class="freq-wrap"><span class="badge b-freq">× 3</span><span class="badge b-marks">5 mk</span></div><div class="q-text">What is the nature of hydrogen spectra? Calculate wavelength and frequency of the limiting line of Lyman series. (R_H = 19677 cm⁻¹) [1+4]</div></div>
+</div>
+</div>
+
+<script>
+function show(id, el) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
